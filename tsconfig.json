@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "lib": [
       "dom",
       "dom.iterable",
@@ -18,7 +18,17 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "paths": {
+      "components/*": ["components/*"],
+      "layout/*": ["layout/*"],
+      "routes/*": ["routes/*"],
+      "store/*": ["store/*"],
+      "types/*": ["types/*"],
+      "lib/*": ["lib/*"],
+      "UI/*": ["UI/*"],
+      "hooks/*": ["hooks/*"],
+    }
   },
   "include": [
     "src"
