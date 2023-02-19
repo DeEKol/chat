@@ -1,17 +1,18 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
-import StoreTest from "components/StoreTest/StoreTest";
 import ErrorPage from "routes/pages/ErrorPage/ErrorPage";
+import AuthPage from "routes/pages/AuthPage/AuthPage";
+import RoomPage from "routes/pages/RoomPage/RoomPage";
 
-export const router = createBrowserRouter([
+export const routes = createBrowserRouter([
   {
     path: "/",
-    element: <StoreTest />,
+    element: <AuthPage />,
     errorElement: <ErrorPage />,
   },
   {
     path: "/:id",
-    element: <h1>Dynamic page</h1>,
+    element: <RoomPage />,
     errorElement: <ErrorPage />,
   },
 ]);

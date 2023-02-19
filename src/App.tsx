@@ -1,23 +1,21 @@
 import React from "react";
 import { store } from "store/store";
-import Header from "components/Header/Header";
-import Footer from "components/Footer/Footer";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "@mui/material";
 import { theme } from "./theme/theme";
-import StoreTest from "components/StoreTest/StoreTest";
 import { RouterProvider } from "react-router-dom";
-import { router } from "./routes/router";
+import { routes } from "routes/routes";
+import "normalize.css";
+import { GlobalStyles } from "./css/GlobalStyles";
 
 function App() {
   return (
     <Provider store={store}>
       <ThemeProvider theme={theme}>
-        <Header />
+        <GlobalStyles />
         <main>
-          <RouterProvider router={router} />
+          <RouterProvider router={routes} />
         </main>
-        <Footer />
       </ThemeProvider>
     </Provider>
   );

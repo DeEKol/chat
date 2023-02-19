@@ -9,17 +9,24 @@ export interface UserState {
 
 const initialState: UserState = {
   isAuth: null,
-  userData: { id: 0, firstname: "", lastname: "" },
+  userData: {
+    id: 0,
+    name: "",
+    lastname: "",
+    currentRoom: null,
+    roomsData: [],
+  },
 };
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    changeAuth(state, action: PayloadAction<AuthType>) {
-      state.isAuth = action.payload;
+    userAuth(state, action: PayloadAction<IUserModel>) {
+      state.isAuth = true;
+      state.userData = action.payload;
     },
   },
 });
 
-export const { changeAuth } = userSlice.actions;
+export const { userAuth } = userSlice.actions;

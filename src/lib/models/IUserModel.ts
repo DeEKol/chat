@@ -1,7 +1,11 @@
+import { IRoomModel } from "lib/models/IRoomModel";
+
 export type AuthType = null | boolean;
 
 export interface IUserModel {
   id: number;
-  firstname: string;
+  name: string;
   lastname: string;
+  currentRoom: string | null;
+  roomsData: IRoomModel[];
 }
