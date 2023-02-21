@@ -6,8 +6,9 @@ import {
   useState,
 } from "react";
 import { useAppDispatch } from "hooks/useStoreHooks";
-import { userAuth } from "store/reducers/userSlice/userSlice";
+import { changeUserAuth } from "store/reducers/userSlice/userSlice";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { saveSessionUser } from "lib/services/sessionStorage";
 
 export const useUserAuth = () => {
   const dispatch = useAppDispatch();
@@ -23,7 +24,7 @@ export const useUserAuth = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(
-      userAuth({
+      changeUserAuth({
         name,
         lastname,
         roomsData: [],
@@ -31,6 +32,7 @@ export const useUserAuth = () => {
         id: Date.now(),
       }),
     );
+    saveSessionUser({ name, lastname, currentRoom: room });
     setName("");
     setLastname("");
     setRoom("");
@@ -56,6 +58,5 @@ export const useUserAuth = () => {
     handleChangeName,
     handleChangeLastname,
     handleChangeRoom,
-    id,
   };
 };

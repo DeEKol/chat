@@ -3,17 +3,7 @@ import { styled } from "@mui/material";
 import Message from "components/Message/Message";
 
 const ChatMessages = () => {
-  return (
-    <ContainerSC>
-      {/*<div style={{ height: "2000px", backgroundColor: "orange" }}></div>*/}
-      <Message />
-      <Message />
-      <Message />
-      <Message />
-      <Message />
-      <Message />
-    </ContainerSC>
-  );
+  return <ContainerSC></ContainerSC>;
 };
 
 const ContainerSC = styled("div")`
@@ -21,10 +11,6 @@ const ContainerSC = styled("div")`
 
   display: flex;
   flex-direction: column;
-  //overflow-y: scroll;
-
-  //height: 100%;
-  //max-height: 100px;
 `;
 
 export default React.memo(ChatMessages);

@@ -7,6 +7,7 @@ import { RouterProvider } from "react-router-dom";
 import { routes } from "routes/routes";
 import "normalize.css";
 import { GlobalStyles } from "./css/GlobalStyles";
+import UserInit from "./init/UserInit";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <RouterProvider router={routes} />
         </main>
       </ThemeProvider>
+      <UserInit />
     </Provider>
   );
 }

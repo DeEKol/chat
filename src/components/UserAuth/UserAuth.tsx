@@ -12,7 +12,6 @@ const UserAuth = () => {
     handleChangeName,
     handleChangeLastname,
     handleChangeRoom,
-    id,
   } = useUserAuth();
 
   return (
@@ -47,7 +46,6 @@ const UserAuth = () => {
           value={room}
           onChange={handleChangeRoom}
           required
-          disabled={!!id}
         />
       </FormItemContainer>
       <Button

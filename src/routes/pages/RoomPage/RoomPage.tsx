@@ -6,7 +6,7 @@ import Chat from "components/Chat/Chat";
 
 const RoomPage = () => {
   const isAuth = useAppSelector((state) => state.userSlice.isAuth);
-  return !isAuth ? <Chat /> : <AuthPage />;
+  return isAuth ? <Chat /> : <AuthPage />;
 };
 
 export default React.memo(RoomPage);

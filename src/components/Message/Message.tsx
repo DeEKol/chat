@@ -1,12 +1,14 @@
 import React from "react";
 import { styled } from "@mui/material";
 import MessageText from "components/Message/MessageText/MessageText";
+import MessageImage from "components/Message/MessageImage/MessageImage";
 
 const Message = () => {
   const isMy = true;
   return (
     <ContainerSC isMy={isMy}>
-      <MessageText />
+      {/*<MessageText />*/}
+      {/*<MessageImage />*/}
     </ContainerSC>
   );
 };

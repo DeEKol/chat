@@ -1,10 +1,9 @@
 import { IUserModel } from "lib/models/IUserModel";
 
 export interface IMessageModel {
-  id: number;
-  senderInfo: number;
-  text: string;
-  date: string;
-  user: Omit<IUserModel, "roomsData">;
-  response?: IMessageModel;
+  readonly id: number;
+  readonly text: string;
+  readonly date: string;
+  readonly user: Omit<IUserModel, "roomsData">;
+  readonly response?: IMessageModel;
 }

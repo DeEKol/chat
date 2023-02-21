@@ -3,9 +3,9 @@ import { IRoomModel } from "lib/models/IRoomModel";
 export type AuthType = null | boolean;
 
 export interface IUserModel {
-  id: number;
-  name: string;
-  lastname: string;
-  currentRoom: string | null;
-  roomsData: IRoomModel[];
+  readonly id: number;
+  readonly name: string;
+  readonly lastname: string;
+  readonly currentRoom: string | null;
+  readonly roomsData: IRoomModel[];
 }

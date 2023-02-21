@@ -1,3 +1,6 @@
+import { IMessageModel } from "lib/models/IMessageModel";
+
 export interface IRoomModel {
-  id: number;
+  readonly id: string;
+  readonly message: IMessageModel[];
 }

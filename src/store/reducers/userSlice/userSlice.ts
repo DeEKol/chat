@@ -22,11 +22,14 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    userAuth(state, action: PayloadAction<IUserModel>) {
+    changeUserAuth(state, action: PayloadAction<IUserModel>) {
       state.isAuth = true;
       state.userData = action.payload;
+    },
+    addNewMessage() {
+      console.log("1");
     },
   },
 });
 
-export const { userAuth } = userSlice.actions;
+export const { changeUserAuth, addNewMessage } = userSlice.actions;
