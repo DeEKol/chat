@@ -29,6 +29,7 @@ export const useChatField = () => {
     ];
 
     dispatch(handleSaveMessage(updatedRoom));
+    window.postMessage(updatedRoom);
   };
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {

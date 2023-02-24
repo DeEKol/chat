@@ -23,7 +23,6 @@ export const userSlice = createSlice({
     handleSaveMessage(state, action: PayloadAction<IRoomModel[]>) {
       setSessionRooms(action.payload);
       state.roomsData = action.payload;
-      window.postMessage(action.payload);
     },
   },
 });
