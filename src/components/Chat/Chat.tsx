@@ -1,5 +1,5 @@
 import React from "react";
-import { styled } from "@mui/material";
+import { Button, styled } from "@mui/material";
 import { useParams } from "react-router-dom";
 import ChatMessages from "components/Chat/ChatMessages/ChatMessages";
 import ChatField from "components/Chat/ChatField/ChatField";
@@ -11,6 +11,7 @@ const Chat = () => {
     <ContainerSC>
       <ChatHeaderSC>
         <h1>Комната: {id}</h1>
+        <Button>Выйти</Button>
       </ChatHeaderSC>
       <WrapperSC>
         <ChatMessages />
@@ -39,6 +40,9 @@ const ChatHeaderSC = styled("header")`
   position: sticky;
   top: 0;
   background-color: #ffffff;
+
+  display: flex;
+  justify-content: space-between;
 `;
 
 const WrapperSC = styled("div")`

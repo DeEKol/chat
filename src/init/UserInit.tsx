@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { getSessionUser } from "lib/services/sessionStorage";
 import { useAppDispatch } from "hooks/useStoreHooks";
-import { changeUserAuth } from "store/reducers/userSlice/userSlice";
+import { handleChangeUserAuth } from "store/reducers/userSlice/userSlice";
 
 const UserInit = () => {
   const dispatch = useAppDispatch();
@@ -9,7 +9,7 @@ const UserInit = () => {
   useEffect(() => {
     const user = getSessionUser();
     if (user) {
-      dispatch(changeUserAuth(JSON.parse(user)));
+      dispatch(handleChangeUserAuth(user));
     }
   }, []);
   return null;

@@ -1,17 +1,17 @@
 import React from "react";
 import { styled } from "@mui/material";
+import { IMessageModel } from "lib/models/IMessageModel";
 
-const MessageText = () => {
+const MessageText = ({
+  text,
+  user,
+  createdAt,
+}: Omit<IMessageModel, "id" | "type">) => {
   return (
     <>
-      <SenderSC>Иван Иванов</SenderSC>
-      <MessageSC>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet aperiam
-        aspernatur cum cumque cupiditate dolorem dolorum ea, enim exercitationem
-        fugiat ipsum maiores nihil, obcaecati quam, qui similique tempore vitae
-        voluptate
-      </MessageSC>
-      <TimeSC>12.04.2022</TimeSC>
+      <SenderSC>{`${user.name} ${user.lastname}`}</SenderSC>
+      <MessageSC>{text}</MessageSC>
+      <TimeSC>{new Date(createdAt).toLocaleString("ru-RU")}</TimeSC>
     </>
   );
 };

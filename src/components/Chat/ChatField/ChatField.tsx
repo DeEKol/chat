@@ -1,43 +1,10 @@
 import { Button, styled, TextField } from "@mui/material";
-import React, { FormEvent, useState } from "react";
-import { useAppSelector } from "hooks/useStoreHooks";
-import { userSlice } from "store/reducers/userSlice/userSlice";
-import { IUserModel } from "lib/models/IUserModel";
+import React from "react";
+import { useChatField } from "components/Chat/ChatField/useChatField";
 
 const ChatField = () => {
-  const user = useAppSelector((state) => state.userSlice.userData);
-  const [message, setMessage] = useState<string>("");
+  const { message, setMessage, onSubmit } = useChatField();
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(message);
-    console.log(user);
-    if (user.roomsData.find((roomItem) => roomItem.id === user.currentRoom)) {
-      console.log("find");
-    } else {
-      const { roomsData, ...otherUserDate } = user;
-      const newUserModel: IUserModel = {
-        ...user,
-        roomsData: [
-          ...roomsData,
-          {
-            id: user.currentRoom as string,
-            message: [
-              {
-                id: 1,
-                text: message,
-                date: new Date().toString(),
-                user: otherUserDate,
-              },
-            ],
-          },
-        ],
-      };
-      console.log(newUserModel);
-    }
-
-    setMessage("");
-  };
   return (
     <FormSC onSubmit={onSubmit}>
       <TextField

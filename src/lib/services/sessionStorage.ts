@@ -1,13 +1,20 @@
 import { IUserModel } from "lib/models/IUserModel";
 import { StorageNameSpace } from "lib/constants/constants";
+import { IRoomModel } from "lib/models/IRoomModel";
 
-export const saveSessionUser = (user: Omit<IUserModel, "id" | "roomsData">) => {
-  sessionStorage.setItem(
-    StorageNameSpace.USER,
-    JSON.stringify({ ...user, id: Date.now(), roomsData: [] } as IUserModel),
-  );
+export const setSessionUser = (user: IUserModel) => {
+  sessionStorage.setItem(StorageNameSpace.USER, JSON.stringify(user));
 };
 
 export const getSessionUser = () => {
-  return sessionStorage.getItem(StorageNameSpace.USER);
+  const user = sessionStorage.getItem(StorageNameSpace.USER);
+  if (user) {
+    return JSON.parse(user) as IUserModel;
+  }
+  return null;
+};
+
+export const setSessionRooms = (rooms: IRoomModel[]) => {
+  const user = getSessionUser() as IUserModel;
+  setSessionUser({ ...user, roomsData: rooms });
 };

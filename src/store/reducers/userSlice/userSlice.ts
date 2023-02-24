@@ -1,35 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { AuthType, IUserModel } from "lib/models/IUserModel";
+import { IUserModel } from "lib/models/IUserModel";
+import { IMessageModel } from "lib/models/IMessageModel";
+import { IRoomModel } from "lib/models/IRoomModel";
+import { setSessionRooms, setSessionUser } from "lib/services/sessionStorage";
 
-export interface UserState {
-  isAuth: AuthType;
-  userData: IUserModel;
-}
-
-const initialState: UserState = {
-  isAuth: null,
-  userData: {
-    id: 0,
-    name: "",
-    lastname: "",
-    currentRoom: null,
-    roomsData: [],
-  },
+const initialState: IUserModel = {
+  id: 0,
+  name: "",
+  lastname: "",
+  roomsData: [],
 };
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    changeUserAuth(state, action: PayloadAction<IUserModel>) {
-      state.isAuth = true;
-      state.userData = action.payload;
+    handleChangeUserAuth(state, action: PayloadAction<IUserModel>) {
+      setSessionUser(action.payload);
+      return action.payload;
     },
-    addNewMessage() {
-      console.log("1");
+    handleSaveMessage(state, action: PayloadAction<IRoomModel[]>) {
+      setSessionRooms(action.payload);
+      state.roomsData = action.payload;
+      window.postMessage(action.payload);
     },
   },
 });
 
-export const { changeUserAuth, addNewMessage } = userSlice.actions;
+export const { handleChangeUserAuth, handleSaveMessage } = userSlice.actions;

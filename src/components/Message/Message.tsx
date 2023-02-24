@@ -1,14 +1,27 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { styled } from "@mui/material";
 import MessageText from "components/Message/MessageText/MessageText";
 import MessageImage from "components/Message/MessageImage/MessageImage";
+import { IMessageModel } from "lib/models/IMessageModel";
+import { useAppSelector } from "hooks/useStoreHooks";
 
-const Message = () => {
-  const isMy = true;
+const Message = (props: IMessageModel) => {
+  const { type, user, createdAt, text, response } = props;
+  const userId = useAppSelector((state) => state.userSlice.id);
+
+  const isMy = useMemo(() => userId === user.id, [user, userId]);
+
   return (
     <ContainerSC isMy={isMy}>
-      {/*<MessageText />*/}
-      {/*<MessageImage />*/}
+      {type === "text" && (
+        <MessageText
+          text={text}
+          user={user}
+          createdAt={createdAt}
+          response={response}
+        />
+      )}
+      {type === "image" && <MessageImage />}
     </ContainerSC>
   );
 };
