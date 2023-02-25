@@ -3,11 +3,13 @@ import { Button, styled } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import ChatMessages from "components/Chat/ChatMessages/ChatMessages";
 import ChatField from "components/Chat/ChatField/ChatField";
-import { useAppDispatch } from "hooks/useStoreHooks";
+import { useAppDispatch, useAppSelector } from "hooks/useStoreHooks";
 import { handleLogout } from "store/reducers/userSlice/userSlice";
 
 const Chat = () => {
   const { id } = useParams();
+
+  const { name, lastname } = useAppSelector((state) => state.userSlice);
 
   const dispatch = useAppDispatch();
 
@@ -23,8 +25,15 @@ const Chat = () => {
   return (
     <ContainerSC>
       <ChatHeaderSC>
-        <h1>Комната: {id}</h1>
-        <Button onClick={handleRoomLeave}>Выйти</Button>
+        <HeaderTopSC>
+          <h1>Комната: {id}</h1>
+          <Button onClick={handleRoomLeave}>Выйти</Button>
+        </HeaderTopSC>
+        <div>
+          <h2>
+            {name} {lastname}
+          </h2>
+        </div>
       </ChatHeaderSC>
       <WrapperSC>
         <ChatMessages />
@@ -33,6 +42,11 @@ const Chat = () => {
     </ContainerSC>
   );
 };
+
+const HeaderTopSC = styled("div")`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const ContainerSC = styled("section")`
   background-color: #ffffff;
@@ -53,9 +67,6 @@ const ChatHeaderSC = styled("header")`
   position: sticky;
   top: 0;
   background-color: #ffffff;
-
-  display: flex;
-  justify-content: space-between;
 `;
 
 const WrapperSC = styled("div")`
