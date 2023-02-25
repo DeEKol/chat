@@ -1,17 +1,30 @@
 import React from "react";
 import { Button, styled } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ChatMessages from "components/Chat/ChatMessages/ChatMessages";
 import ChatField from "components/Chat/ChatField/ChatField";
+import { useAppDispatch } from "hooks/useStoreHooks";
+import { handleLogout } from "store/reducers/userSlice/userSlice";
 
 const Chat = () => {
   const { id } = useParams();
+
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+
+  const handleRoomLeave = () => {
+    dispatch(handleLogout());
+    setTimeout(() => {
+      navigate("/");
+    }, 4);
+  };
 
   return (
     <ContainerSC>
       <ChatHeaderSC>
         <h1>Комната: {id}</h1>
-        <Button>Выйти</Button>
+        <Button onClick={handleRoomLeave}>Выйти</Button>
       </ChatHeaderSC>
       <WrapperSC>
         <ChatMessages />

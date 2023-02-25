@@ -22,9 +22,12 @@ export const userSlice = createSlice({
     },
     handleSaveMessage(state, action: PayloadAction<IRoomModel[]>) {
       setSessionRooms(action.payload);
+      localStorage.setItem("dios", "dssa");
       state.roomsData = action.payload;
     },
+    handleLogout: () => initialState,
   },
 });
 
-export const { handleChangeUserAuth, handleSaveMessage } = userSlice.actions;
+export const { handleChangeUserAuth, handleSaveMessage, handleLogout } =
+  userSlice.actions;

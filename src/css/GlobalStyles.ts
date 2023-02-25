@@ -31,4 +31,8 @@ export const GlobalStyles = createGlobalStyle`
   main {
     flex-grow: 1;
   }
+  
+  ul, li {
+    list-style-type: none;
+  }
 `;

@@ -1,13 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import UserAuth from "components/UserAuth/UserAuth";
 import { AuthPageStyles } from "routes/pages/AuthPage/AuthPage.styles";
+import UserSelect from "components/UserSelect/UserSelect";
+import { useAppDispatch, useAppSelector } from "hooks/useStoreHooks";
+import { handleLogout } from "store/reducers/userSlice/userSlice";
+import { useParams } from "react-router-dom";
 
 const AuthPage = () => {
+  const user = useAppSelector((state) => state.userSlice);
+
+  const dispatch = useAppDispatch();
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    console.log(id);
+    if (user && !id) {
+      dispatch(handleLogout());
+    }
+  }, []);
+
   return (
     <ContainerSC>
       <WrapperSC>
         <TitleCS>Вход</TitleCS>
         <UserAuth />
+        <UserSelect />
       </WrapperSC>
     </ContainerSC>
   );
