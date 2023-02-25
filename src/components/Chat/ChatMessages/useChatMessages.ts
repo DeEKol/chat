@@ -6,19 +6,19 @@ import { StorageNameSpace } from "lib/constants/constants";
 import { IMessageModel } from "lib/models/IMessageModel";
 import { IRoomMessageModel } from "lib/models/IRoomMessageModel";
 import { useAppDispatch } from "hooks/useStoreHooks";
+import { useCreateMessage } from "hooks/useCreateMessage";
 
 export const useChatMessages = () => {
   const { existsMessage, currentRoomId } = useCurrentMessages();
 
-  const dispatch = useAppDispatch();
+  const { createMessage } = useCreateMessage();
 
   const onPostMessage = (event: StorageEvent) => {
-    console.log(event);
     if (event.key === StorageNameSpace.LAST_MESSAGES) {
-      console.log(event.newValue);
       const roomMessage: IRoomMessageModel = JSON.parse(event.newValue || "");
       if (roomMessage) {
         if (roomMessage.room === currentRoomId) {
+          createMessage("text", roomMessage.message.text, roomMessage.message);
         }
       }
     }

@@ -6,45 +6,17 @@ import { handleSaveMessage } from "store/reducers/userSlice/userSlice";
 import { useCurrentMessages } from "hooks/useCurrentMessages";
 import { StorageNameSpace } from "lib/constants/constants";
 import { IRoomMessageModel } from "lib/models/IRoomMessageModel";
+import { useCreateMessage } from "hooks/useCreateMessage";
 
 export const useChatField = () => {
-  const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.userSlice);
-  const { currentRoomId, existsMessage } = useCurrentMessages();
-
   const [message, setMessage] = useState<string>("");
 
-  const createMessage = (type: MessageType) => {
-    const { roomsData, ...otherUserInfo } = user;
-
-    const newMessage: IMessageModel = {
-      id: Date.now() + user.id,
-      text: message,
-      createdAt: new Date().getTime(),
-      user: otherUserInfo,
-      type,
-    };
-
-    const updatedRoom: IRoomModel[] = [
-      ...roomsData.filter((roomItem) => roomItem.id !== currentRoomId),
-      { id: currentRoomId as string, message: [...existsMessage, newMessage] },
-    ];
-
-    dispatch(handleSaveMessage(updatedRoom));
-    localStorage.setItem(
-      StorageNameSpace.LAST_MESSAGES,
-      JSON.stringify({
-        room: currentRoomId,
-        message: newMessage,
-      } as IRoomMessageModel),
-    );
-    localStorage.removeItem(StorageNameSpace.LAST_MESSAGES);
-  };
+  const { createMessage } = useCreateMessage();
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    createMessage("text");
+    createMessage("text", message);
 
     setMessage("");
   };
