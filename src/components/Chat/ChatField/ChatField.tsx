@@ -3,10 +3,22 @@ import React from "react";
 import { useChatField } from "components/Chat/ChatField/useChatField";
 
 const ChatField = () => {
-  const { message, setMessage, onSubmit } = useChatField();
+  const { inputRef, message, setMessage, onSubmit, onChange } = useChatField();
 
   return (
     <FormSC onSubmit={onSubmit}>
+      <InputSC
+        type="file"
+        accept="image/*"
+        multiple={false}
+        onChange={onChange}
+        ref={inputRef}
+      />
+      <Button
+        variant="contained"
+        onClick={() => inputRef.current?.click()}>
+        Прикрепить фото
+      </Button>
       <TextField
         value={message}
         fullWidth
@@ -26,12 +38,19 @@ const ChatField = () => {
 
 const FormSC = styled("form")`
   display: flex;
+  align-items: center;
 
   position: sticky;
   bottom: 0;
   background-color: white;
 
   padding-top: 10px;
+`;
+
+const InputSC = styled("input")`
+  visibility: hidden;
+  width: 0;
+  height: 0;
 `;
 
 export default React.memo(ChatField);

@@ -8,13 +8,10 @@ import { useParams } from "react-router-dom";
 
 const AuthPage = () => {
   const user = useAppSelector((state) => state.userSlice);
-
   const dispatch = useAppDispatch();
-
   const { id } = useParams();
 
   useEffect(() => {
-    console.log(id);
     if (user && !id) {
       dispatch(handleLogout());
     }

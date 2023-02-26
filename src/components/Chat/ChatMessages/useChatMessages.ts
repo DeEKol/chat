@@ -1,26 +1,27 @@
 import { useEffect } from "react";
-import { Window } from "@mui/icons-material";
-import { IRoomModel } from "lib/models/IRoomModel";
-import { useCurrentMessages } from "hooks/useCurrentMessages";
+import { useAppDispatch, useAppSelector } from "hooks/useStoreHooks";
 import { StorageNameSpace } from "lib/constants/constants";
-import { IMessageModel } from "lib/models/IMessageModel";
-import { IRoomMessageModel } from "lib/models/IRoomMessageModel";
-import { useAppDispatch } from "hooks/useStoreHooks";
-import { useCreateMessage } from "hooks/useCreateMessage";
+import {
+  getLocalStorageRoomMessages,
+  getLocalStorageRooms,
+} from "lib/services/sessionStorage";
+import { useParams } from "react-router-dom";
+import { handleChangeRoom } from "store/reducers/roomSlice/roomSlice";
 
 export const useChatMessages = () => {
-  const { existsMessage, currentRoomId } = useCurrentMessages();
-
-  const { createMessage } = useCreateMessage();
+  const { messages } = useAppSelector((state) => state.roomSlice);
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
 
   const onPostMessage = (event: StorageEvent) => {
-    if (event.key === StorageNameSpace.LAST_MESSAGES) {
-      const roomMessage: IRoomMessageModel = JSON.parse(event.newValue || "");
-      if (roomMessage) {
-        if (roomMessage.room === currentRoomId) {
-          createMessage("text", roomMessage.message.text, roomMessage.message);
-        }
-      }
+    if (event.key == StorageNameSpace.ROOMS) {
+      const typeRoomId = id || "";
+      dispatch(
+        handleChangeRoom({
+          id: typeRoomId,
+          messages: getLocalStorageRoomMessages(typeRoomId),
+        }),
+      );
     }
   };
 
@@ -29,5 +30,13 @@ export const useChatMessages = () => {
     return () => window.removeEventListener("storage", onPostMessage);
   }, []);
 
-  return { existsMessage };
+  useEffect(() => {
+    if (messages.length) {
+      window.scrollTo({ top: 10000000000000 });
+    }
+  }, [messages]);
+  //
+  return {
+    messages,
+  };
 };

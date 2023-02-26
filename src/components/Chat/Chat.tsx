@@ -1,40 +1,34 @@
-import React from "react";
-import { Button, styled } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { styled } from "@mui/material";
 import ChatMessages from "components/Chat/ChatMessages/ChatMessages";
 import ChatField from "components/Chat/ChatField/ChatField";
-import { useAppDispatch, useAppSelector } from "hooks/useStoreHooks";
-import { handleLogout } from "store/reducers/userSlice/userSlice";
+import {
+  getLocalStorageRoomMessages,
+  getLocalStorageRooms,
+} from "lib/services/sessionStorage";
+import ChatHeader from "components/Chat/ChatHeader/ChatHeader";
+import { useAppDispatch } from "hooks/useStoreHooks";
+import { useParams } from "react-router-dom";
+import { handleChangeRoom } from "store/reducers/roomSlice/roomSlice";
 
 const Chat = () => {
   const { id } = useParams();
-
-  const { name, lastname } = useAppSelector((state) => state.userSlice);
-
   const dispatch = useAppDispatch();
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    const roomId = id || "";
 
-  const handleRoomLeave = () => {
-    dispatch(handleLogout());
-    setTimeout(() => {
-      navigate("/");
-    }, 4);
-  };
+    dispatch(
+      handleChangeRoom({
+        id: roomId,
+        messages: getLocalStorageRoomMessages(roomId),
+      }),
+    );
+  }, []);
 
   return (
     <ContainerSC>
-      <ChatHeaderSC>
-        <HeaderTopSC>
-          <h1>Комната: {id}</h1>
-          <Button onClick={handleRoomLeave}>Выйти</Button>
-        </HeaderTopSC>
-        <div>
-          <h2>
-            {name} {lastname}
-          </h2>
-        </div>
-      </ChatHeaderSC>
+      <ChatHeader />
       <WrapperSC>
         <ChatMessages />
         <ChatField />
@@ -42,11 +36,6 @@ const Chat = () => {
     </ContainerSC>
   );
 };
-
-const HeaderTopSC = styled("div")`
-  display: flex;
-  justify-content: space-between;
-`;
 
 const ContainerSC = styled("section")`
   background-color: #ffffff;
@@ -58,15 +47,6 @@ const ContainerSC = styled("section")`
   max-width: 800px;
   width: 100%;
   margin: 0 auto;
-`;
-
-const ChatHeaderSC = styled("header")`
-  border-bottom: 1px solid gray;
-  padding: 0 10px;
-
-  position: sticky;
-  top: 0;
-  background-color: #ffffff;
 `;
 
 const WrapperSC = styled("div")`

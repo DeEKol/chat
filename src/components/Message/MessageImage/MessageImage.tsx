@@ -1,11 +1,13 @@
 import React from "react";
 import { styled } from "@mui/material";
+import { IMessageModel } from "lib/models/IMessageModel";
 
-const MessageImage = () => {
+const MessageImage = ({ text }: Pick<IMessageModel, "text">) => {
+  console.log(text);
   return (
     <ImageSC
       alt="message_image"
-      src="https://picsum.photos/1920/1080"
+      src={text}
     />
   );
 };

@@ -13,15 +13,10 @@ const Message = (props: IMessageModel) => {
 
   return (
     <ContainerSC isMy={isMy}>
-      {type === "text" && (
-        <MessageText
-          text={text}
-          user={user}
-          createdAt={createdAt}
-          response={response}
-        />
-      )}
-      {type === "image" && <MessageImage />}
+      <SenderSC>{`${user.name} ${user.lastname}`}</SenderSC>
+      {type === "text" && <MessageText text={text} />}
+      {type === "image" && <MessageImage text={text} />}
+      <TimeSC>{new Date(createdAt).toLocaleString("ru-RU")}</TimeSC>
     </ContainerSC>
   );
 };
@@ -37,6 +32,23 @@ const ContainerSC = styled("div")<{ isMy: boolean }>`
 
   align-self: ${({ isMy }) => (isMy ? "flex-end" : "flex-start")};
   text-align: ${({ isMy }) => (isMy ? "right" : "left")};
+`;
+
+const SenderSC = styled("div")`
+  font-size: 16px;
+  line-height: 20px;
+
+  color: black;
+
+  margin-bottom: 5px;
+`;
+
+const TimeSC = styled("time")`
+  font-size: 12px;
+  line-height: 14px;
+  color: grey;
+
+  margin-top: 5px;
 `;
 
 export default React.memo(Message);

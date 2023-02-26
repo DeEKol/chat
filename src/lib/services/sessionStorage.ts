@@ -1,6 +1,7 @@
 import { IUserModel } from "lib/models/IUserModel";
 import { StorageNameSpace } from "lib/constants/constants";
 import { IRoomModel } from "lib/models/IRoomModel";
+import { IMessageModel } from "lib/models/IMessageModel";
 
 export const getLocalStorageUser = (): IUserModel[] => {
   return JSON.parse(localStorage.getItem(StorageNameSpace.USERS) || "[]");
@@ -38,7 +39,26 @@ export const getSessionUser = () => {
   return null;
 };
 
-export const setSessionRooms = (rooms: IRoomModel[]) => {
-  const user = getSessionUser() as IUserModel;
-  setSessionUser({ ...user, roomsData: rooms });
+export const getLocalStorageRooms = () => {
+  const rooms = localStorage.getItem(StorageNameSpace.ROOMS) || "[]";
+  return JSON.parse(rooms) as IRoomModel[];
+};
+
+export const getLocalStorageRoomMessages = (roomId: string) => {
+  const rooms = getLocalStorageRooms();
+  return rooms.find((roomItem) => roomItem.id === roomId)?.messages || [];
+};
+
+export const setLocalStorageRoom = (
+  roomId: string,
+  messages: IMessageModel[],
+) => {
+  const rooms = getLocalStorageRooms();
+  console.log(messages);
+  const newRoom: IRoomModel[] = [
+    ...rooms.filter((item) => item.id !== roomId),
+    { id: roomId, messages },
+  ];
+
+  localStorage.setItem(StorageNameSpace.ROOMS, JSON.stringify(newRoom));
 };

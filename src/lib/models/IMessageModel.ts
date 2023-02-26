@@ -8,5 +8,5 @@ export interface IMessageModel {
   readonly createdAt: number;
   readonly user: Omit<IUserModel, "roomsData">;
   readonly type: MessageType;
-  readonly response?: IMessageModel;
+  readonly response: IMessageModel | null;
 }

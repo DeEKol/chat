@@ -4,17 +4,11 @@ import Message from "components/Message/Message";
 import { useChatMessages } from "components/Chat/ChatMessages/useChatMessages";
 
 const ChatMessages = () => {
-  const { existsMessage } = useChatMessages();
-
-  useEffect(() => {
-    if (existsMessage.length) {
-      window.scrollTo({ top: 10000000000000 });
-    }
-  }, [existsMessage]);
+  const { messages } = useChatMessages();
 
   return (
     <ContainerSC>
-      {existsMessage.map((messageItem) => (
+      {messages.map((messageItem) => (
         <Message
           key={messageItem.id}
           {...messageItem}

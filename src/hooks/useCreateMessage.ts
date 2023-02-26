@@ -1,48 +1,38 @@
+import { getLocalStorageRoomMessages } from "lib/services/sessionStorage";
 import { IMessageModel, MessageType } from "lib/models/IMessageModel";
-import { IRoomModel } from "lib/models/IRoomModel";
-import { handleSaveMessage } from "store/reducers/userSlice/userSlice";
-import { StorageNameSpace } from "lib/constants/constants";
-import { IRoomMessageModel } from "lib/models/IRoomMessageModel";
-import { useCurrentMessages } from "hooks/useCurrentMessages";
+import { handleChangeRoom } from "store/reducers/roomSlice/roomSlice";
 import { useAppDispatch, useAppSelector } from "hooks/useStoreHooks";
+import { useParams } from "react-router-dom";
 
 export const useCreateMessage = () => {
+  const { id } = useParams();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.userSlice);
-  const { currentRoomId, existsMessage } = useCurrentMessages();
 
-  const createMessage = (
-    type: MessageType,
-    message: string,
-    otherMessage?: IMessageModel,
-  ) => {
-    const { roomsData, ...otherUserInfo } = user;
+  const sendMessage = (message: string, type: MessageType) => {
+    const roomId = id || "";
+    const existsMessages = getLocalStorageRoomMessages(roomId);
 
-    const newMessage: IMessageModel = otherMessage || {
-      id: Date.now() + user.id,
+    const newMessage: IMessageModel = {
+      id: Date.now(),
       text: message,
-      createdAt: new Date().getTime(),
-      user: otherUserInfo,
       type,
+      createdAt: new Date().getTime(),
+      response: null,
+      user,
     };
 
-    const updatedRoom: IRoomModel[] = [
-      ...roomsData.filter((roomItem) => roomItem.id !== currentRoomId),
-      { id: currentRoomId as string, message: [...existsMessage, newMessage] },
-    ];
+    const messages: IMessageModel[] = [...existsMessages, newMessage];
 
-    dispatch(handleSaveMessage(updatedRoom));
-    if (!otherMessage) {
-      localStorage.setItem(
-        StorageNameSpace.LAST_MESSAGES,
-        JSON.stringify({
-          room: currentRoomId,
-          message: newMessage,
-        } as IRoomMessageModel),
-      );
-      localStorage.removeItem(StorageNameSpace.LAST_MESSAGES);
-    }
+    dispatch(
+      handleChangeRoom({
+        id: roomId,
+        messages: messages,
+      }),
+    );
   };
 
-  return { createMessage };
+  return {
+    sendMessage,
+  };
 };

@@ -4,5 +4,4 @@ export interface IUserModel {
   readonly id: number;
   readonly name: string;
   readonly lastname: string;
-  roomsData: IRoomModel[];
 }

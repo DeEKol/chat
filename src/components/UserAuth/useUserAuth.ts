@@ -8,6 +8,7 @@ import {
 import { useAppDispatch } from "hooks/useStoreHooks";
 import { handleChangeUserAuth } from "store/reducers/userSlice/userSlice";
 import { useNavigate, useParams } from "react-router-dom";
+import { IUserModel } from "lib/models/IUserModel";
 
 export const useUserAuth = () => {
   const dispatch = useAppDispatch();
@@ -22,17 +23,16 @@ export const useUserAuth = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const user = {
+    const user: IUserModel = {
       id: Date.now(),
       name,
       lastname,
-      roomsData: [],
     };
     dispatch(handleChangeUserAuth(user));
+
     setName("");
     setLastname("");
     setRoom("");
-
     navigate(`/${room}`);
   };
 
