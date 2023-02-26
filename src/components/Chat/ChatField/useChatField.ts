@@ -16,6 +16,10 @@ export const useChatField = () => {
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (!message) {
+      return;
+    }
+
     createMessage("text", message);
 
     setMessage("");
