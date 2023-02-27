@@ -2,10 +2,7 @@ import React, { useEffect } from "react";
 import { styled } from "@mui/material";
 import ChatMessages from "components/Chat/ChatMessages/ChatMessages";
 import ChatField from "components/Chat/ChatField/ChatField";
-import {
-  getLocalStorageRoomMessages,
-  getLocalStorageRooms,
-} from "lib/services/sessionStorage";
+import { getLocalStorageRoomMessages } from "lib/services/sessionStorage";
 import ChatHeader from "components/Chat/ChatHeader/ChatHeader";
 import { useAppDispatch } from "hooks/useStoreHooks";
 import { useParams } from "react-router-dom";

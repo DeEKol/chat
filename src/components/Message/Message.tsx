@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { styled } from "@mui/material";
+import { Button, styled } from "@mui/material";
 import MessageText from "components/Message/MessageText/MessageText";
 import MessageImage from "components/Message/MessageImage/MessageImage";
 import { IMessageModel } from "lib/models/IMessageModel";
@@ -13,25 +13,29 @@ const Message = (props: IMessageModel) => {
 
   return (
     <ContainerSC isMy={isMy}>
-      <SenderSC>{`${user.name} ${user.lastname}`}</SenderSC>
-      {type === "text" && <MessageText text={text} />}
-      {type === "image" && <MessageImage text={text} />}
-      <TimeSC>{new Date(createdAt).toLocaleString("ru-RU")}</TimeSC>
+      <WrapperSC>
+        <SenderSC>{`${user.name} ${user.lastname}`}</SenderSC>
+        {type === "text" && <MessageText text={text} />}
+        {type === "image" && <MessageImage text={text} />}
+        <TimeSC>{new Date(createdAt).toLocaleString("ru-RU")}</TimeSC>
+      </WrapperSC>
+      <ButtonSC>Ответить</ButtonSC>
     </ContainerSC>
   );
 };
 
 const ContainerSC = styled("div")<{ isMy: boolean }>`
+  max-width: 80%;
+  margin-bottom: 10px;
+  align-self: ${({ isMy }) => (isMy ? "flex-end" : "flex-start")};
+  text-align: ${({ isMy }) => (isMy ? "right" : "left")};
+`;
+
+const WrapperSC = styled("div")`
   background-color: lightblue;
   color: white;
   border-radius: 10px;
-  max-width: 80%;
-
   padding: 10px;
-  margin-bottom: 10px;
-
-  align-self: ${({ isMy }) => (isMy ? "flex-end" : "flex-start")};
-  text-align: ${({ isMy }) => (isMy ? "right" : "left")};
 `;
 
 const SenderSC = styled("div")`
@@ -51,4 +55,9 @@ const TimeSC = styled("time")`
   margin-top: 5px;
 `;
 
+const ButtonSC = styled(Button)`
+  display: block;
+  padding: 0;
+  margin: 5px 0;
+`;
 export default React.memo(Message);

@@ -32,7 +32,9 @@ export const useChatMessages = () => {
 
   useEffect(() => {
     if (messages.length) {
-      window.scrollTo({ top: 10000000000000 });
+      setTimeout(() => {
+        window.scrollTo({ top: 10000000000000 });
+      }, 20);
     }
   }, [messages]);
   //
