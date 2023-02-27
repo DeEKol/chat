@@ -3,23 +3,45 @@ import { Button, styled } from "@mui/material";
 import MessageText from "components/Message/MessageText/MessageText";
 import MessageImage from "components/Message/MessageImage/MessageImage";
 import { IMessageModel } from "lib/models/IMessageModel";
-import { useAppSelector } from "hooks/useStoreHooks";
+import { useAppDispatch, useAppSelector } from "hooks/useStoreHooks";
+import { handleChangeResponse } from "store/reducers/roomSlice/roomSlice";
 
-const Message = (props: IMessageModel) => {
-  const { type, user, createdAt, text, response } = props;
+interface IMessageProps extends IMessageModel {
+  isResponse?: boolean;
+}
+
+const Message = ({ isResponse = false, ...props }: IMessageProps) => {
+  const { response } = props;
+  const { type, user, createdAt, text } = props;
   const userId = useAppSelector((state) => state.userSlice.id);
+  const dispatch = useAppDispatch();
 
   const isMy = useMemo(() => userId === user.id, [user, userId]);
 
+  const handleClick = () => {
+    dispatch(handleChangeResponse(props));
+  };
+
   return (
     <ContainerSC isMy={isMy}>
+      {response && (
+        <ResponseContainerSC>
+          <ResponseTitleSC>Ответил на:</ResponseTitleSC>
+          <Message
+            isResponse={true}
+            {...response}
+          />
+        </ResponseContainerSC>
+      )}
       <WrapperSC>
         <SenderSC>{`${user.name} ${user.lastname}`}</SenderSC>
         {type === "text" && <MessageText text={text} />}
         {type === "image" && <MessageImage text={text} />}
         <TimeSC>{new Date(createdAt).toLocaleString("ru-RU")}</TimeSC>
       </WrapperSC>
-      <ButtonSC>Ответить</ButtonSC>
+      {!isMy && !isResponse && (
+        <ButtonSC onClick={handleClick}>Ответить</ButtonSC>
+      )}
     </ContainerSC>
   );
 };
@@ -29,12 +51,23 @@ const ContainerSC = styled("div")<{ isMy: boolean }>`
   margin-bottom: 10px;
   align-self: ${({ isMy }) => (isMy ? "flex-end" : "flex-start")};
   text-align: ${({ isMy }) => (isMy ? "right" : "left")};
+  background-color: lavender;
+  border-radius: 10px;
+  overflow: hidden;
+`;
+
+const ResponseContainerSC = styled("div")`
+  display: flex;
+  align-items: center;
+`;
+
+const ResponseTitleSC = styled("h4")`
+  margin-right: 10px;
 `;
 
 const WrapperSC = styled("div")`
   background-color: lightblue;
   color: white;
-  border-radius: 10px;
   padding: 10px;
 `;
 

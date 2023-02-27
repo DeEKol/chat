@@ -18,11 +18,12 @@ const ChatMessages = () => {
   );
 };
 
-const ContainerSC = styled("div")`
+const ContainerSC = styled("main")`
   flex-grow: 1;
 
   display: flex;
   flex-direction: column;
+  padding: 10px;
 `;
 
 export default React.memo(ChatMessages);

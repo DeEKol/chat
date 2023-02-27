@@ -5,6 +5,7 @@ import UserSelect from "components/UserSelect/UserSelect";
 import { useAppDispatch, useAppSelector } from "hooks/useStoreHooks";
 import { handleLogout } from "store/reducers/userSlice/userSlice";
 import { useParams } from "react-router-dom";
+import { handleChangeResponse } from "store/reducers/roomSlice/roomSlice";
 
 const AuthPage = () => {
   const user = useAppSelector((state) => state.userSlice);
@@ -14,6 +15,7 @@ const AuthPage = () => {
   useEffect(() => {
     if (user && !id) {
       dispatch(handleLogout());
+      dispatch(handleChangeResponse(null));
     }
   }, []);
 

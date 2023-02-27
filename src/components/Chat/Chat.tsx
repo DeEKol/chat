@@ -26,10 +26,8 @@ const Chat = () => {
   return (
     <ContainerSC>
       <ChatHeader />
-      <WrapperSC>
-        <ChatMessages />
-        <ChatField />
-      </WrapperSC>
+      <ChatMessages />
+      <ChatField />
     </ContainerSC>
   );
 };
@@ -44,15 +42,6 @@ const ContainerSC = styled("section")`
   max-width: 800px;
   width: 100%;
   margin: 0 auto;
-`;
-
-const WrapperSC = styled("div")`
-  flex-grow: 1;
-
-  display: flex;
-  flex-direction: column;
-
-  padding: 10px;
 `;
 
 export default React.memo(Chat);
