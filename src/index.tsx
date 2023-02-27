@@ -3,8 +3,6 @@ import ReactDOM from "react-dom/client";
 
 import App from "./App";
 
-// StrictMode выключил, так как проект тестовый
-
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
 );

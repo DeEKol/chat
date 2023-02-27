@@ -1,8 +1,8 @@
-import { Button, styled, TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import React from "react";
 import { useChatField } from "components/Chat/ChatField/useChatField";
-import { useAppSelector } from "hooks/useStoreHooks";
 import ChatFieldResponse from "components/Chat/ChatField/ChatFieldResponse/ChatFieldResponse";
+import { ChatFieldStyles } from "components/Chat/ChatField/ChatField.styles";
 
 const ChatField = () => {
   const { inputRef, message, setMessage, onSubmit, onChange } = useChatField();
@@ -41,28 +41,6 @@ const ChatField = () => {
   );
 };
 
-const FooterSC = styled("footer")`
-  background-color: #ffffff;
-  padding: 5px;
-  position: sticky;
-  bottom: 0;
-`;
-
-const FormSC = styled("form")`
-  display: flex;
-  align-items: center;
-
-  position: sticky;
-  bottom: 0;
-  background-color: white;
-
-  padding-top: 10px;
-`;
-
-const InputSC = styled("input")`
-  visibility: hidden;
-  width: 0;
-  height: 0;
-`;
+const { FooterSC, FormSC, InputSC } = ChatFieldStyles();
 
 export default React.memo(ChatField);

@@ -17,7 +17,6 @@ export const roomSlice = createSlice({
   name: "roomSlice",
   initialState,
   reducers: {
-    handleResetRoom: () => initialState,
     handleChangeRoom(state, action: PayloadAction<IRoomModel>) {
       if (action.payload.messages.length) {
         setLocalStorageRoom(action.payload.id, action.payload.messages);
@@ -34,5 +33,4 @@ export const roomSlice = createSlice({
   },
 });
 
-export const { handleChangeRoom, handleResetRoom, handleChangeResponse } =
-  roomSlice.actions;
+export const { handleChangeRoom, handleChangeResponse } = roomSlice.actions;

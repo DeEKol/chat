@@ -2,7 +2,8 @@ import React from "react";
 import { useAppDispatch, useAppSelector } from "hooks/useStoreHooks";
 import { handleLogout } from "store/reducers/userSlice/userSlice";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, styled } from "@mui/material";
+import { Button } from "@mui/material";
+import { ChatHeaderStyles } from "components/Chat/ChatHeader/ChatHeader.styles";
 
 const ChatHeader = () => {
   const { id } = useParams();
@@ -33,19 +34,6 @@ const ChatHeader = () => {
   );
 };
 
-const ChatHeaderSC = styled("header")`
-  border-bottom: 1px solid gray;
-  padding: 0 10px;
+const { ChatHeaderSC, HeaderTopSC } = ChatHeaderStyles();
 
-  position: sticky;
-  top: 0;
-  background-color: #ffffff;
-  z-index: 1;
-`;
-
-const HeaderTopSC = styled("div")`
-  display: flex;
-  justify-content: space-between;
-`;
-
-export default ChatHeader;
+export default React.memo(ChatHeader);

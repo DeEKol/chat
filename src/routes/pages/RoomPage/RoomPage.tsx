@@ -8,4 +8,4 @@ const RoomPage = () => {
   return isAuth ? <Chat /> : <AuthPage />;
 };
 
-export default React.memo(RoomPage);
+export default RoomPage;

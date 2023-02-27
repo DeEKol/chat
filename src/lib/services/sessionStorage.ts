@@ -18,14 +18,6 @@ export const setLocalStorageUser = (user: IUserModel) => {
   );
 };
 
-export const deleteLocalStorageUser = (user: IUserModel) => {
-  const users = getLocalStorageUser();
-  localStorage.setItem(
-    StorageNameSpace.USERS,
-    JSON.stringify([...users.filter((userItem) => userItem.id !== user.id)]),
-  );
-};
-
 export const setSessionUser = (user: IUserModel) => {
   sessionStorage.setItem(StorageNameSpace.USER, JSON.stringify(user));
   setLocalStorageUser(user);
@@ -54,7 +46,6 @@ export const setLocalStorageRoom = (
   messages: IMessageModel[],
 ) => {
   const rooms = getLocalStorageRooms();
-  console.log(messages);
   const newRoom: IRoomModel[] = [
     ...rooms.filter((item) => item.id !== roomId),
     { id: roomId, messages },

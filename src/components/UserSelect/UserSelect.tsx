@@ -1,18 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { IUserModel } from "lib/models/IUserModel";
-import { getLocalStorageUser } from "lib/services/sessionStorage";
-import UserSelectItem from "components/UserSelect/UserSelectItem";
+import React from "react";
+import UserSelectItem from "components/UserSelect/UserSelectItem/UserSelectItem";
 import { AuthPageStyles } from "routes/pages/AuthPage/AuthPage.styles";
+import { useUserSelect } from "components/UserSelect/useUserSelect";
 
 const UserSelect = () => {
-  const [users, setUsers] = useState<IUserModel[]>([]);
-
-  const isUsers = useMemo(() => !!users.length, [users]);
-
-  useEffect(() => {
-    setUsers(getLocalStorageUser());
-  }, []);
-
+  const { isUsers, users } = useUserSelect();
   return isUsers ? (
     <>
       <TitleCS>Войти как:</TitleCS>

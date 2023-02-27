@@ -1,27 +1,12 @@
-import React, { useEffect } from "react";
-import { styled } from "@mui/material";
+import React from "react";
 import ChatMessages from "components/Chat/ChatMessages/ChatMessages";
 import ChatField from "components/Chat/ChatField/ChatField";
-import { getLocalStorageRoomMessages } from "lib/services/sessionStorage";
 import ChatHeader from "components/Chat/ChatHeader/ChatHeader";
-import { useAppDispatch } from "hooks/useStoreHooks";
-import { useParams } from "react-router-dom";
-import { handleChangeRoom } from "store/reducers/roomSlice/roomSlice";
+import { ChatStyles } from "components/Chat/ Chat.styles";
+import { useChat } from "components/Chat/useChat";
 
 const Chat = () => {
-  const { id } = useParams();
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const roomId = id || "";
-
-    dispatch(
-      handleChangeRoom({
-        id: roomId,
-        messages: getLocalStorageRoomMessages(roomId),
-      }),
-    );
-  }, []);
+  useChat();
 
   return (
     <ContainerSC>
@@ -32,16 +17,6 @@ const Chat = () => {
   );
 };
 
-const ContainerSC = styled("section")`
-  background-color: #ffffff;
-
-  display: flex;
-  flex-direction: column;
-
-  min-height: 100vh;
-  max-width: 800px;
-  width: 100%;
-  margin: 0 auto;
-`;
+const { ContainerSC } = ChatStyles();
 
 export default React.memo(Chat);

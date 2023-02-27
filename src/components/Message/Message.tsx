@@ -1,27 +1,17 @@
-import React, { useMemo } from "react";
-import { Button, styled } from "@mui/material";
+import React from "react";
 import MessageText from "components/Message/MessageText/MessageText";
 import MessageImage from "components/Message/MessageImage/MessageImage";
 import { IMessageModel } from "lib/models/IMessageModel";
-import { useAppDispatch, useAppSelector } from "hooks/useStoreHooks";
-import { handleChangeResponse } from "store/reducers/roomSlice/roomSlice";
+import { MessageStyles } from "components/Message/Message.styles";
+import { useMessage } from "components/Message/useMessage";
 
-interface IMessageProps extends IMessageModel {
+export interface IMessageProps extends IMessageModel {
   isResponse?: boolean;
 }
 
 const Message = ({ isResponse = false, ...props }: IMessageProps) => {
-  const { response } = props;
-  const { type, user, createdAt, text } = props;
-  const userId = useAppSelector((state) => state.userSlice.id);
-  const dispatch = useAppDispatch();
-
-  const isMy = useMemo(() => userId === user.id, [user, userId]);
-
-  const handleClick = () => {
-    dispatch(handleChangeResponse(props));
-  };
-
+  const { response, isMy, handleClick, createdAt, user, type, text } =
+    useMessage(props);
   return (
     <ContainerSC isMy={isMy}>
       {response && (
@@ -46,51 +36,14 @@ const Message = ({ isResponse = false, ...props }: IMessageProps) => {
   );
 };
 
-const ContainerSC = styled("div")<{ isMy: boolean }>`
-  max-width: 80%;
-  margin-bottom: 10px;
-  align-self: ${({ isMy }) => (isMy ? "flex-end" : "flex-start")};
-  text-align: ${({ isMy }) => (isMy ? "right" : "left")};
-  background-color: lavender;
-  border-radius: 10px;
-  overflow: hidden;
-`;
+const {
+  ContainerSC,
+  ResponseContainerSC,
+  ResponseTitleSC,
+  WrapperSC,
+  SenderSC,
+  TimeSC,
+  ButtonSC,
+} = MessageStyles();
 
-const ResponseContainerSC = styled("div")`
-  display: flex;
-  align-items: center;
-`;
-
-const ResponseTitleSC = styled("h4")`
-  margin-right: 10px;
-`;
-
-const WrapperSC = styled("div")`
-  background-color: lightblue;
-  color: white;
-  padding: 10px;
-`;
-
-const SenderSC = styled("div")`
-  font-size: 16px;
-  line-height: 20px;
-
-  color: black;
-
-  margin-bottom: 5px;
-`;
-
-const TimeSC = styled("time")`
-  font-size: 12px;
-  line-height: 14px;
-  color: grey;
-
-  margin-top: 5px;
-`;
-
-const ButtonSC = styled(Button)`
-  display: block;
-  padding: 0;
-  margin: 5px 0;
-`;
 export default React.memo(Message);

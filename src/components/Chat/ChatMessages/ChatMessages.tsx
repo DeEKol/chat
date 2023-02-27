@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import { styled } from "@mui/material";
+import React from "react";
 import Message from "components/Message/Message";
 import { useChatMessages } from "components/Chat/ChatMessages/useChatMessages";
+import { ChatMessagesStyles } from "components/Chat/ChatMessages/ChatMessages.styles";
 
 const ChatMessages = () => {
   const { messages } = useChatMessages();
@@ -18,12 +18,6 @@ const ChatMessages = () => {
   );
 };
 
-const ContainerSC = styled("main")`
-  flex-grow: 1;
-
-  display: flex;
-  flex-direction: column;
-  padding: 10px;
-`;
+const { ContainerSC } = ChatMessagesStyles();
 
 export default React.memo(ChatMessages);

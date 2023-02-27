@@ -1,9 +1,8 @@
 import React from "react";
-import { styled } from "@mui/material";
 import { IMessageModel } from "lib/models/IMessageModel";
+import { MessageImageStyles } from "components/Message/MessageImage/MessageImage.styles";
 
 const MessageImage = ({ text }: Pick<IMessageModel, "text">) => {
-  console.log(text);
   return (
     <ImageSC
       alt="message_image"
@@ -12,12 +11,6 @@ const MessageImage = ({ text }: Pick<IMessageModel, "text">) => {
   );
 };
 
-const ImageSC = styled("img")`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-
-  max-height: 500px;
-`;
+const { ImageSC } = MessageImageStyles();
 
 export default React.memo(MessageImage);
