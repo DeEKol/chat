@@ -10,12 +10,24 @@ export interface IMessageProps extends IMessageModel {
 }
 
 const Message = ({ isResponse = false, ...props }: IMessageProps) => {
-  const { response, isMy, handleClick, createdAt, user, type, text } =
+  const { ref, response, isMy, handleClick, createdAt, user, type, text } =
     useMessage(props);
+
+  const headerHeight = document.querySelector("header")?.offsetHeight || 0;
+
   return (
-    <ContainerSC isMy={isMy}>
+    <ContainerSC
+      isMy={isMy}
+      ref={ref}>
+      {/*TODO: ВЫНЕСТИ В ОТДЕЛЬНЫЙ КОМПОНЕНТ*/}
       {response && (
-        <ResponseContainerSC>
+        <ResponseContainerSC
+          onClick={() =>
+            window.scrollTo({
+              behavior: "smooth",
+              top: response?.scrollTop - headerHeight,
+            })
+          }>
           <ResponseTitleSC>Ответил на:</ResponseTitleSC>
           <Message
             isResponse={true}
@@ -29,7 +41,7 @@ const Message = ({ isResponse = false, ...props }: IMessageProps) => {
         {type === "image" && <MessageImage text={text} />}
         <TimeSC>{new Date(createdAt).toLocaleString("ru-RU")}</TimeSC>
       </WrapperSC>
-      {!isMy && !isResponse && (
+      {!isMy && !isResponse && !response && (
         <ButtonSC onClick={handleClick}>Ответить</ButtonSC>
       )}
     </ContainerSC>

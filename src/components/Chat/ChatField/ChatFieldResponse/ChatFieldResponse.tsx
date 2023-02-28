@@ -26,14 +26,17 @@ const ChatFieldResponse = () => {
           Удалить
         </Button>
       </WrapperSC>
-      <Message
-        {...response}
-        isResponse={true}
-      />
+      <MessageWrapperSC>
+        <Message
+          {...response}
+          isResponse={true}
+        />
+      </MessageWrapperSC>
     </ContainerSC>
   ) : null;
 };
 
-const { ContainerSC, WrapperSC, TittleSC } = ChatFieldResponseStyles();
+const { ContainerSC, WrapperSC, TittleSC, MessageWrapperSC } =
+  ChatFieldResponseStyles();
 
 export default ChatFieldResponse;

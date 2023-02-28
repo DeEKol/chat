@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IRoomModel } from "lib/models/IRoomModel";
 import { setLocalStorageRoom } from "lib/services/sessionStorage";
-import { IMessageModel } from "lib/models/IMessageModel";
+import { IMessageModel, ResponseType } from "lib/models/IMessageModel";
 
 interface IInitialRoomSlice extends IRoomModel {
-  response: IMessageModel | null;
+  response: ResponseType;
 }
 
 const initialState: IInitialRoomSlice = {
@@ -24,10 +24,7 @@ export const roomSlice = createSlice({
       state.id = action.payload.id;
       state.messages = action.payload.messages;
     },
-    handleChangeResponse: (
-      state,
-      action: PayloadAction<IMessageModel | null>,
-    ) => {
+    handleChangeResponse: (state, action: PayloadAction<ResponseType>) => {
       state.response = action.payload;
     },
   },

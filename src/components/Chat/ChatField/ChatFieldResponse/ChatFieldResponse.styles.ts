@@ -15,10 +15,16 @@ const WrapperSC = styled("div")`
   margin-bottom: 5px;
 `;
 
+const MessageWrapperSC = styled("div")`
+  max-height: 300px;
+  overflow: scroll;
+`;
+
 const TittleSC = styled("h3")``;
 
 export const ChatFieldResponseStyles = () => ({
   ContainerSC,
   WrapperSC,
   TittleSC,
+  MessageWrapperSC,
 });

@@ -10,9 +10,12 @@ const ContainerSC = styled("div")<{ isMy: boolean }>`
   overflow: hidden;
 `;
 
-const ResponseContainerSC = styled("div")`
+const ResponseContainerSC = styled("button")`
+  cursor: pointer;
   display: flex;
   align-items: center;
+  border: 0;
+  background-color: transparent;
 `;
 
 const ResponseTitleSC = styled("h4")`
