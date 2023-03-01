@@ -10,18 +10,6 @@ const ContainerSC = styled("div")<{ isMy: boolean }>`
   overflow: hidden;
 `;
 
-const ResponseContainerSC = styled("button")`
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  border: 0;
-  background-color: transparent;
-`;
-
-const ResponseTitleSC = styled("h4")`
-  margin-right: 10px;
-`;
-
 const WrapperSC = styled("div")`
   background-color: lightblue;
   color: white;
@@ -53,8 +41,6 @@ const ButtonSC = styled(Button)`
 
 export const MessageStyles = () => ({
   ContainerSC,
-  ResponseContainerSC,
-  ResponseTitleSC,
   WrapperSC,
   SenderSC,
   TimeSC,

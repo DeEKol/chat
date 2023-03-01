@@ -4,6 +4,7 @@ import MessageImage from "components/Message/MessageImage/MessageImage";
 import { IMessageModel } from "lib/models/IMessageModel";
 import { MessageStyles } from "components/Message/Message.styles";
 import { useMessage } from "components/Message/useMessage";
+import MessageReply from "components/Message/MessageReply/MessageReply";
 
 export interface IMessageProps extends IMessageModel {
   isResponse?: boolean;
@@ -19,21 +20,11 @@ const Message = ({ isResponse = false, ...props }: IMessageProps) => {
     <ContainerSC
       isMy={isMy}
       ref={ref}>
-      {/*TODO: ВЫНЕСТИ В ОТДЕЛЬНЫЙ КОМПОНЕНТ*/}
       {response && (
-        <ResponseContainerSC
-          onClick={() =>
-            window.scrollTo({
-              behavior: "smooth",
-              top: response?.scrollTop - headerHeight,
-            })
-          }>
-          <ResponseTitleSC>Ответил на:</ResponseTitleSC>
-          <Message
-            isResponse={true}
-            {...response}
-          />
-        </ResponseContainerSC>
+        <MessageReply
+          response={response}
+          headerHeight={headerHeight}
+        />
       )}
       <WrapperSC>
         <SenderSC>{`${user.name} ${user.lastname}`}</SenderSC>
@@ -48,14 +39,6 @@ const Message = ({ isResponse = false, ...props }: IMessageProps) => {
   );
 };
 
-const {
-  ContainerSC,
-  ResponseContainerSC,
-  ResponseTitleSC,
-  WrapperSC,
-  SenderSC,
-  TimeSC,
-  ButtonSC,
-} = MessageStyles();
+const { ContainerSC, WrapperSC, SenderSC, TimeSC, ButtonSC } = MessageStyles();
 
 export default React.memo(Message);
